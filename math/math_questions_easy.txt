@@ -1,0 +1,10 @@
+3 + 5 = 
+9 - 6 = 
+3 x 5 =
+6 x 7 = 
+8 / 2 = 
+18 / 2 =
+How much would your change be if you paid for an P18.00 bottle of water with a P100.00 bill?
+How much would your change be if you paid for a P32.00 ice cream cone with a P100.00 bill?
+How much would your change be if you paid P50.00 for a pack of crinkles with a P200.00 bill?
+How much would your change be if you paid P27.00 for a xerox copy with a P200.00 bill?
