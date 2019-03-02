@@ -69,7 +69,7 @@ def grade_quiz(answered_questions):
     """Returns the score given a list of answered Question objects."""
     return sum(1 * question.difficulty.value 
                for question in answered_questions 
-               if question.answer == question.chosen)
+               if question.answer.lower().strip() == question.chosen.lower().strip())
 
 def get_total(answered_questions):
     return sum(1 * question.difficulty.value
