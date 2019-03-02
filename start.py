@@ -44,7 +44,7 @@ class Difficulty(Enum):
     HARD = 3
 
 CATEGORIES = {'Mathematics':'math', 'Science':'science', 
-              'Philippine History':'phil'}
+              'Philippine History':'ph'}
 NUM_QUESTIONS = 10
 
 
@@ -70,6 +70,10 @@ def grade_quiz(answered_questions):
     return sum(1 * question.difficulty.value 
                for question in answered_questions 
                if question.answer == question.chosen)
+
+def get_total(answered_questions):
+    return sum(1 * question.difficulty.value
+               for question in answered_questions)
 
 def generate_questions(category):
     # category = dirname of the chosen topic
@@ -118,4 +122,7 @@ def _pick(prompt, options, indicator='=>'):
 if __name__ == "__main__":
     answered_questions = start_quiz()
     score = grade_quiz(answered_questions)
+    total = get_total(answered_questions)
     print(f"score: {score}")
+    print(f"total: {total}")
+    print(f"percentage: {(score / total) * 100}%")
