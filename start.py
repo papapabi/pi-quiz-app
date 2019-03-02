@@ -45,6 +45,8 @@ class Difficulty(Enum):
 
 CATEGORIES = {'Mathematics':'math', 'Science':'science', 
               'Philippine History':'phil'}
+NUM_QUESTIONS = 10
+
 
 def choose_category():
     """Returns the value of the chosen category as a string."""
@@ -70,9 +72,8 @@ def grade_quiz(answered_questions):
                if question.answer == question.chosen)
 
 def generate_questions(category):
+    # category = dirname of the chosen topic
     """Returns a randomized list of Question objects from the given category."""
-    # given the path
-    # we want to return a list of randomized Question objects
     questions = []
     filenames_by_difficulty = dict()
     # {<Difficulty.EASY: 1>:<easy_filenames>, 
@@ -82,15 +83,14 @@ def generate_questions(category):
         filenames_by_difficulty[d] = [os.path.join(category_dir, f) 
                                       for f in os.listdir(category_dir)
                                       if d.name.lower() in f]
-    print(filenames_by_difficulty)
 
     with ExitStack() as stack:
         for difficulty, fnames in filenames_by_difficulty.items():
             files = [stack.enter_context(open(fname)) for fname in fnames]
-            print(files)
+            # opens in this order -> answers, choices, questions
+            # change the file handle to a csv reader object
+            files[1]  = csv.reader(files[1])
             for answer, choices, question in zip_longest(*files):
-                # Read choice csv
-                choices = choices.strip().split(" ")
                 answer = answer.strip()
                 question = question.strip()
                 questions.append(Question(question=question,
@@ -98,7 +98,7 @@ def generate_questions(category):
                                         answer=answer,
                                         difficulty=difficulty))
     random.shuffle(questions)
-    return questions
+    return questions[:NUM_QUESTIONS]
 
 def _pick(prompt, options, indicator='=>'):
     # TODO: look up proper method documentation
